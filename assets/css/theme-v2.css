@@ -304,6 +304,13 @@ body.admin-bar .tv2-header {
   background: var(--tv2-surface-2);
 }
 
+.tv2-header__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
 .tv2-header__actions {
   display: flex;
   align-items: center;

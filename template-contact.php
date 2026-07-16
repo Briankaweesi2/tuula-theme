@@ -4,9 +4,10 @@
  *
  * v2 design system: three contact-method cards (call, WhatsApp, visit),
  * then an office photo + the shared tuula_contact_card() beside a message
- * form. The form opens a pre-filled email draft to the real Tuula address
- * (tuula_opt('email')) — same honest lead-capture mechanism as the Apply
- * wizard; no fake AJAX submission.
+ * form. The form submits directly to the server (tuula_handle_contact_submit()
+ * in functions.php), which emails the real Tuula address via wp_mail();
+ * it falls back to a mailto draft only if the request itself fails to reach
+ * the server.
  */
 get_header();
 
@@ -63,7 +64,7 @@ $img_base = get_template_directory_uri() . '/assets/images/';
 
 			<div class="tv2-contact-form-card">
 				<h3><?php esc_html_e( 'Send us a message', 'tuula' ); ?></h3>
-				<p><?php esc_html_e( 'We respond during business hours. Sending opens an email draft addressed to the Tuula team.', 'tuula' ); ?></p>
+				<p><?php esc_html_e( 'We respond during business hours. Your message is sent straight to the Tuula team.', 'tuula' ); ?></p>
 				<form data-tv2-contact-form>
 					<div class="tv2-field-grid">
 						<label class="tv2-field">
@@ -86,7 +87,7 @@ $img_base = get_template_directory_uri() . '/assets/images/';
 						<textarea name="message" rows="5" placeholder="<?php esc_attr_e( 'How can we help?', 'tuula' ); ?>" required></textarea>
 					</label>
 					<button type="submit" class="tv2-btn tv2-btn--primary tv2-btn--block"><?php esc_html_e( 'Send message', 'tuula' ); ?></button>
-					<p class="tv2-form-note" data-contact-status><?php printf( esc_html__( 'Sending opens an email draft to %s in your email app.', 'tuula' ), esc_html( tuula_opt( 'email' ) ) ); ?></p>
+					<p class="tv2-form-note" data-contact-status><?php printf( esc_html__( 'Your message goes straight to %s.', 'tuula' ), esc_html( tuula_opt( 'email' ) ) ); ?></p>
 				</form>
 			</div>
 		</div>

@@ -100,10 +100,57 @@ add_action( 'wp_enqueue_scripts', function () {
 	/* v2 interactions: dark/light toggle, loan-solution tabs, calculator displays. */
 	wp_enqueue_script( 'tuula-theme-v2', $uri . '/assets/js/theme-v2.js', array( 'tuula-app' ), TUULA_VERSION, true );
 	wp_localize_script( 'tuula-app', 'TUULA', array(
-		'applyUrl' => tuula_page_url( 'apply' ),
-		'email'    => tuula_opt( 'email' ),
+		'applyUrl'      => tuula_page_url( 'apply' ),
+		'email'         => tuula_opt( 'email' ),
+		'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+		'contactNonce'  => wp_create_nonce( 'tuula_contact_submit' ),
 	) );
 } );
+
+/* ------------------------------------------------------------------ *
+ *  Contact form: real server-side email delivery via wp_mail().
+ * ------------------------------------------------------------------ */
+add_action( 'wp_ajax_tuula_contact_submit', 'tuula_handle_contact_submit' );
+add_action( 'wp_ajax_nopriv_tuula_contact_submit', 'tuula_handle_contact_submit' );
+
+function tuula_handle_contact_submit() {
+	check_ajax_referer( 'tuula_contact_submit', 'nonce' );
+
+	/* Honeypot: real visitors never fill this hidden field. */
+	if ( ! empty( $_POST['website'] ) ) {
+		wp_send_json_success();
+	}
+
+	$name    = isset( $_POST['fullName'] ) ? sanitize_text_field( wp_unslash( $_POST['fullName'] ) ) : '';
+	$email   = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+	$phone   = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
+	$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
+
+	if ( '' === $name || '' === $phone || '' === $message ) {
+		wp_send_json_error( array( 'message' => __( 'Please fill in your name, phone number and message.', 'tuula' ) ), 400 );
+	}
+
+	$to      = tuula_opt( 'email' );
+	$subject = sprintf( '[Tuula Credit website] Message from %s', $name );
+	$body    = "New message from the Tuula Credit contact form:\n\n"
+		. "Name: {$name}\n"
+		. "Phone: {$phone}\n"
+		. ( $email ? "Email: {$email}\n" : '' )
+		. "\nMessage:\n{$message}\n";
+
+	$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
+	if ( $email ) {
+		$headers[] = "Reply-To: {$name} <{$email}>";
+	}
+
+	$sent = wp_mail( $to, $subject, $body, $headers );
+
+	if ( $sent ) {
+		wp_send_json_success( array( 'message' => __( 'Thanks — your message has been sent. We will get back to you during business hours.', 'tuula' ) ) );
+	}
+
+	wp_send_json_error( array( 'message' => __( 'Sorry, your message could not be sent right now. Please call or WhatsApp us instead.', 'tuula' ) ), 500 );
+}
 
 /* Pages rebuilt on the v2 design system get the fully themed (dark/light)
    body background; legacy templates keep their light styling until their
@@ -230,40 +277,88 @@ add_filter( 'pre_get_document_title', function ( $title ) {
 	return $title;
 } );
 
-add_action( 'wp_head', function () {
+/** Canonical URL for the current view (front page, a mapped page, or WP default). */
+function tuula_seo_current_url() {
+	if ( is_front_page() ) {
+		return home_url( '/' );
+	}
 	$key = tuula_seo_current_key();
-	$map = tuula_seo_map();
-	if ( $key && isset( $map[ $key ] ) ) {
-		printf( "<meta name=\"description\" content=\"%s\">\n", esc_attr( $map[ $key ]['description'] ) );
+	if ( $key ) {
+		return tuula_page_url( $key );
 	}
+	global $wp;
+	return home_url( add_query_arg( array(), $wp->request ) );
+}
 
-	/* LocalBusiness / FinancialService JSON-LD with real contact facts. */
-	if ( is_front_page() || is_page( 'contact' ) ) {
-		$schema = array(
-			'@context'  => 'https://schema.org',
-			'@type'     => 'FinancialService',
-			'name'      => 'Tuula Credit',
-			'url'       => home_url( '/' ),
-			'email'     => tuula_opt( 'email' ),
-			'telephone' => tuula_opt( 'phone_tel' ),
-			'areaServed'=> 'Uganda',
-			'address'   => array(
-				'@type'          => 'PostalAddress',
-				'streetAddress'  => 'Plot 1200 Old Port Bell Road, 2nd Floor Hardware World Mall',
-				'addressLocality'=> 'Kitintale',
-				'addressCountry' => 'UG',
-			),
-			'serviceType' => array(
-				'Business loans',
-				'School fees loans',
-				'Logbook loans',
-				'Asset financing',
-				'Emergency loans',
-				'Personal loans',
-			),
-		);
-		echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
-	}
+/** Default social-share image (used when a page has no featured image). */
+function tuula_seo_default_image() {
+	return get_template_directory_uri() . '/assets/images/hero-portrait.jpg';
+}
+
+/* WP core's own rel_canonical() only fires for is_singular() views and would
+   duplicate the canonical link below on every mapped page (front page,
+   Contact, etc.) — replace it with the single canonical printed below. */
+remove_action( 'wp_head', 'rel_canonical' );
+
+add_action( 'wp_head', function () {
+	$key   = tuula_seo_current_key();
+	$map   = tuula_seo_map();
+	$title = ( $key && isset( $map[ $key ] ) ) ? $map[ $key ]['title'] : wp_get_document_title();
+	$desc  = ( $key && isset( $map[ $key ] ) )
+		? $map[ $key ]['description']
+		: tuula_opt( 'footer_tagline', __( 'Flexible, transparent loans for individuals, businesses and institutions in Uganda.', 'tuula' ) );
+	$url   = tuula_seo_current_url();
+	$image = has_post_thumbnail() ? get_the_post_thumbnail_url( null, 'large' ) : tuula_seo_default_image();
+
+	/* Robots: WP core (wp_robots hooks) already prints noindex when
+	   Settings → Reading → "Discourage search engines" is checked; no
+	   need to duplicate that meta tag here. */
+	printf( "<link rel=\"canonical\" href=\"%s\">\n", esc_url( $url ) );
+	printf( "<meta name=\"description\" content=\"%s\">\n", esc_attr( $desc ) );
+
+	/* Open Graph */
+	printf( "<meta property=\"og:site_name\" content=\"%s\">\n", esc_attr( get_bloginfo( 'name' ) ) );
+	printf( "<meta property=\"og:type\" content=\"website\">\n" );
+	printf( "<meta property=\"og:title\" content=\"%s\">\n", esc_attr( $title ) );
+	printf( "<meta property=\"og:description\" content=\"%s\">\n", esc_attr( $desc ) );
+	printf( "<meta property=\"og:url\" content=\"%s\">\n", esc_url( $url ) );
+	printf( "<meta property=\"og:image\" content=\"%s\">\n", esc_url( $image ) );
+	printf( "<meta property=\"og:locale\" content=\"en_UG\">\n" );
+
+	/* Twitter Card */
+	printf( "<meta name=\"twitter:card\" content=\"summary_large_image\">\n" );
+	printf( "<meta name=\"twitter:title\" content=\"%s\">\n", esc_attr( $title ) );
+	printf( "<meta name=\"twitter:description\" content=\"%s\">\n", esc_attr( $desc ) );
+	printf( "<meta name=\"twitter:image\" content=\"%s\">\n", esc_url( $image ) );
+
+	/* FinancialService JSON-LD with real contact facts — on every page so
+	   Google can associate the business with the whole site, not just Home/Contact. */
+	$schema = array(
+		'@context'    => 'https://schema.org',
+		'@type'       => 'FinancialService',
+		'name'        => 'Tuula Credit',
+		'url'         => home_url( '/' ),
+		'logo'        => get_template_directory_uri() . '/assets/images/tuula-logo.png',
+		'email'       => tuula_opt( 'email' ),
+		'telephone'   => tuula_opt( 'phone_tel' ),
+		'areaServed'  => 'Uganda',
+		'address'     => array(
+			'@type'           => 'PostalAddress',
+			'streetAddress'   => 'Plot 1200 Old Port Bell Road, 2nd Floor Hardware World Mall',
+			'addressLocality' => 'Kitintale',
+			'addressCountry'  => 'UG',
+		),
+		'sameAs'      => array_values( array_filter( array( tuula_opt( 'facebook_url' ), tuula_opt( 'twitter_url' ) ) ) ),
+		'serviceType' => array(
+			'Business loans',
+			'School fees loans',
+			'Logbook loans',
+			'Asset financing',
+			'Emergency loans',
+			'Personal loans',
+		),
+	);
+	echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
 }, 5 );
 
 /* ------------------------------------------------------------------ *

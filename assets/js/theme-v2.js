@@ -340,8 +340,10 @@
   }
 
   /* ── Contact message form (Contact page) ─────────────────────── *
-   * Same honest mechanism as the Apply wizard: submitting opens an
-   * email draft to the real Tuula address (no fake AJAX success).   */
+   * Submits directly to the server, which emails the real Tuula
+   * address via wp_mail() (see tuula_handle_contact_submit() in
+   * functions.php). Falls back to a mailto draft only if the request
+   * itself fails to reach the server (offline, blocked, etc.).       */
   var contactForm = document.querySelector("[data-tv2-contact-form]");
 
   if (contactForm) {
@@ -350,29 +352,69 @@
       if (!contactForm.reportValidity()) return;
 
       var contactEmail = (window.TUULA && window.TUULA.email) || "info@tuulacredit.com";
+      var status = contactForm.querySelector("[data-contact-status]");
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
       var data = new FormData(contactForm);
       var name = String(data.get("fullName") || "").trim();
-      var body = [
-        "New website message for Tuula Credit",
-        "",
-        "Name: " + name,
-        "Phone: " + (data.get("phone") || ""),
-        "Email: " + (data.get("email") || ""),
-        "",
-        "Message:",
-        data.get("message") || "",
-      ].join("\n");
-      var subject = "Website message" + (name ? " from " + name : "");
 
-      var status = contactForm.querySelector("[data-contact-status]");
-      if (status) {
-        status.textContent = "Opening an email draft to " + contactEmail + " in your email app…";
+      function mailtoFallback() {
+        var body = [
+          "New website message for Tuula Credit",
+          "",
+          "Name: " + name,
+          "Phone: " + (data.get("phone") || ""),
+          "Email: " + (data.get("email") || ""),
+          "",
+          "Message:",
+          data.get("message") || "",
+        ].join("\n");
+        var subject = "Website message" + (name ? " from " + name : "");
+        if (status) {
+          status.textContent = "Opening an email draft to " + contactEmail + " in your email app…";
+        }
+        window.location.href =
+          "mailto:" + contactEmail +
+          "?subject=" + encodeURIComponent(subject) +
+          "&body=" + encodeURIComponent(body);
       }
 
-      window.location.href =
-        "mailto:" + contactEmail +
-        "?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
+      if (!window.TUULA || !window.TUULA.ajaxUrl || !window.TUULA.contactNonce || !window.fetch) {
+        mailtoFallback();
+        return;
+      }
+
+      data.append("action", "tuula_contact_submit");
+      data.append("nonce", window.TUULA.contactNonce);
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (status) status.textContent = "Sending your message…";
+
+      fetch(window.TUULA.ajaxUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        body: data,
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (json) {
+          if (json && json.success) {
+            if (status) {
+              status.textContent = (json.data && json.data.message) || "Thanks — your message has been sent.";
+            }
+            contactForm.reset();
+          } else {
+            if (status) {
+              status.textContent = (json && json.data && json.data.message) || "Sorry, something went wrong. Please try again.";
+            }
+          }
+        })
+        .catch(function () {
+          mailtoFallback();
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   }
 })();
