@@ -72,8 +72,8 @@ $img_base = get_template_directory_uri() . '/assets/images/';
 							<input type="text" name="fullName" autocomplete="name" placeholder="<?php esc_attr_e( 'Your name', 'tuula' ); ?>" required>
 						</label>
 						<label class="tv2-field">
-							<span><?php esc_html_e( 'Email (optional)', 'tuula' ); ?></span>
-							<input type="email" name="email" autocomplete="email" placeholder="name@example.com">
+							<span><?php esc_html_e( 'Email', 'tuula' ); ?></span>
+							<input type="email" name="email" autocomplete="email" placeholder="name@example.com" required>
 						</label>
 					</div>
 					<div class="tv2-field-grid">
