@@ -155,7 +155,7 @@ function tuula_handle_contact_submit() {
 
 	tuula_send_contact_autoreply( $name, $email, $message );
 
-	wp_send_json_success( array( 'message' => __( 'Thanks — your message has been sent. We will get back to you during business hours.', 'tuula' ) ) );
+	wp_send_json_success( array( 'message' => __( 'Thanks — your message has been sent. We will get back to you during business hours. Check your inbox (or spam folder) for our confirmation email.', 'tuula' ) ) );
 }
 
 /** Confirmation email sent to the visitor after a successful contact-form submission. */
