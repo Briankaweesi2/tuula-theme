@@ -145,11 +145,34 @@ function tuula_handle_contact_submit() {
 
 	$sent = wp_mail( $to, $subject, $body, $headers );
 
-	if ( $sent ) {
-		wp_send_json_success( array( 'message' => __( 'Thanks — your message has been sent. We will get back to you during business hours.', 'tuula' ) ) );
+	if ( ! $sent ) {
+		wp_send_json_error( array( 'message' => __( 'Sorry, your message could not be sent right now. Please call or WhatsApp us instead.', 'tuula' ) ), 500 );
 	}
 
-	wp_send_json_error( array( 'message' => __( 'Sorry, your message could not be sent right now. Please call or WhatsApp us instead.', 'tuula' ) ), 500 );
+	/* Auto-reply to the visitor, only when they gave an email to reply to. */
+	if ( $email ) {
+		tuula_send_contact_autoreply( $name, $email, $message );
+	}
+
+	wp_send_json_success( array( 'message' => __( 'Thanks — your message has been sent. We will get back to you during business hours.', 'tuula' ) ) );
+}
+
+/** Confirmation email sent to the visitor after a successful contact-form submission. */
+function tuula_send_contact_autoreply( $name, $email, $message ) {
+	$first_name = trim( strtok( $name, ' ' ) );
+	$subject    = __( 'We received your message — Tuula Credit', 'tuula' );
+	$body       = sprintf(
+		"Hi %s,\n\nThanks for reaching out to Tuula Credit. We've received your message and a member of the team will get back to you during business hours.\n\nYour message:\n\"%s\"\n\nNeed a faster answer? Call or WhatsApp us on %s, or visit the office at %s, %s.\n\n— The Tuula Credit team\n%s",
+		$first_name ? $first_name : $name,
+		$message,
+		tuula_opt( 'phone_display' ),
+		tuula_opt( 'address_line_1' ),
+		tuula_opt( 'address_line_2' ),
+		home_url( '/' )
+	);
+	$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
+
+	wp_mail( $email, $subject, $body, $headers );
 }
 
 /* Pages rebuilt on the v2 design system get the fully themed (dark/light)
