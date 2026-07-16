@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TUULA_VERSION', '1.1.0' );
+define( 'TUULA_VERSION', '1.2.0' );
 
 /* ------------------------------------------------------------------ *
  *  Real business facts (from the approved static prototype).
