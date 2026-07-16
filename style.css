@@ -1,0 +1,19 @@
+/*
+Theme Name: Tuula Credit
+Theme URI: https://tuulacredit.com/
+Author: Tuula Financial Services Limited
+Description: Custom marketing theme for Tuula Credit — flexible loans in Uganda for school fees, logbooks, assets, emergencies, personal needs, SMEs and corporate finance. Built as a lightweight coded theme with ACF-editable sections that degrade gracefully to sensible defaults when ACF is not installed.
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tuula
+Tags: business, finance, custom-menu, custom-logo, one-column
+*/
+
+/*
+ * The design system lives in assets/css/styles.css (base, shared with the
+ * approved static prototype) and assets/css/theme.css (WordPress-specific
+ * polish layer). Both are enqueued from functions.php.
+ */

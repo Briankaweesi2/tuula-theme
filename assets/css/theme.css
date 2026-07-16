@@ -1,0 +1,171 @@
+/*
+ * Tuula Credit — WordPress polish layer.
+ * Loaded after the shared design system (styles.css).
+ * Adds the trust grid, hero CTA row, section CTA rows, card hover lift
+ * and small WP-specific fixes. Palette per docs/wordpress-handoff.md.
+ */
+
+/* ── WordPress admin bar offset ── */
+body.admin-bar .site-header {
+  top: 32px;
+}
+@media (max-width: 782px) {
+  body.admin-bar .site-header {
+    top: 46px;
+  }
+}
+
+/* ── Logo sizing (custom logo or bundled fallback) ── */
+.brand img {
+  max-height: 56px;
+  width: auto;
+}
+
+/* ── Hero CTA row (primary action high on the page) ── */
+.hero__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.button--ghost-light {
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #ffffff;
+}
+
+.button--ghost-light:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Buttons: smoother professional transitions ── */
+.button {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.button--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(21, 87, 191, 0.28);
+}
+
+/* ── Product cards: hover lift + gold accent underline ── */
+.product-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.product-card:hover .product-card__icon {
+  background: var(--color-gold);
+  color: #ffffff;
+}
+
+/* ── Section CTA row (below grids) ── */
+.section-cta-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 34px;
+}
+
+/* ── Trust grid ("reasons to trust" pattern) ── */
+.trust-strip {
+  background:
+    linear-gradient(180deg, #ffffff 0%, var(--color-soft) 100%);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.trust-grid article {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  padding: 26px 22px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.trust-grid article::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-deep), var(--color-gold));
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.trust-grid article:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.trust-grid article:hover::before {
+  opacity: 1;
+}
+
+.trust-grid__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-sky);
+  color: var(--color-deep);
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.trust-grid h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.trust-grid p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 15px;
+}
+
+@media (max-width: 980px) {
+  .trust-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Home steps section keeps the process styling compact ── */
+.home-steps .process {
+  margin-top: 8px;
+}
+
+/* ── WP content fallback pages ── */
+.entry-content {
+  max-width: 820px;
+}
+
+.entry-content a {
+  color: var(--color-green);
+  text-decoration: underline;
+}
+
+/* ── Custom logo class emitted by the_custom_logo() ── */
+.custom-logo {
+  max-height: 56px;
+  width: auto;
+}
