@@ -2,8 +2,7 @@
 /**
  * Template Name: Terms & Conditions
  *
- * Terms of Use supplied for Tuula Credit. Replace all bracketed
- * placeholders and obtain qualified Ugandan legal review before publishing.
+ * Terms of Use for Tuula Credit. Obtain qualified Ugandan legal review before publishing.
  */
 get_header();
 ?>
