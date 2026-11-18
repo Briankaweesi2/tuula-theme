@@ -51,6 +51,17 @@ function tuula_opt( $name, $default = null ) {
 	if ( function_exists( 'get_field' ) ) {
 		$value = get_field( $name, 'option' );
 		if ( null !== $value && '' !== $value ) {
+			/* Transparently replace the previous published contact defaults if
+			   they were saved in ACF options; preserve any other custom values. */
+			$legacy_values = array(
+				'email'          => array( 'info@tuulacredit.com' => 'admin@tuulacredit.com' ),
+				'whatsapp_url'   => array( 'https://wa.me/256777030520?text=Hello%2C%20how%20may%20we%20help' => 'https://wa.me/256393256458?text=Hello%2C%20how%20may%20we%20help' ),
+				'address_line_1' => array( 'Upet House, Behind Total Luzira' => 'UPET House' ),
+				'address_line_2' => array( 'Plot 4-6 Old Portbell Road' => 'Plot No. 4-6 Portbell Road, Luzira' ),
+			);
+			if ( isset( $legacy_values[ $name ][ $value ] ) ) {
+				return $legacy_values[ $name ][ $value ];
+			}
 			return $value;
 		}
 	}
