@@ -29,7 +29,8 @@
 <header class="tv2-header" data-header>
 	<div class="tv2-header__inner">
 		<a class="tv2-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<span class="tv2-logo" role="img" aria-label="<?php esc_attr_e( 'Tuula Credit', 'tuula' ); ?>"></span>
+			<span class="tv2-logo" aria-hidden="true"></span>
+			<span class="tv2-brand__name">Tuula Credit</span>
 		</a>
 
 		<nav class="tv2-nav" id="site-nav" data-nav aria-label="<?php esc_attr_e( 'Primary', 'tuula' ); ?>">

@@ -4,7 +4,8 @@ $tuula_services_url = tuula_page_url( 'services' );
 <footer class="tv2-footer">
 	<div class="tv2-footer__grid">
 		<div class="tv2-footer__about">
-			<span class="tv2-logo tv2-logo--footer" role="img" aria-label="<?php esc_attr_e( 'Tuula Credit', 'tuula' ); ?>"></span>
+			<span class="tv2-logo tv2-logo--footer" aria-hidden="true"></span>
+			<strong class="tv2-brand__name tv2-brand__name--footer">Tuula Credit</strong>
 			<p><?php echo esc_html( tuula_opt( 'footer_tagline', __( 'We help individuals, businesses and institutions build, preserve and manage wealth so they can pursue their financial goals.', 'tuula' ) ) ); ?></p>
 		</div>
 		<div>

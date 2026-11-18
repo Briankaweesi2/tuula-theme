@@ -261,20 +261,34 @@ body.admin-bar .tv2-header {
   flex: 0 0 auto;
 }
 
-/* Real Tuula logo recolored via CSS mask: white in dark, brand blue in light */
+/* Official two-tone Tuula Credit symbol supplied for this rebrand. */
 .tv2-logo {
   display: block;
-  height: 32px;
-  width: 118px;
-  background-color: var(--tv2-logo-color);
+  flex: 0 0 auto;
+  height: 38px;
+  width: 42px;
   background: url(../images/tuula-credit-mark.svg) center / contain no-repeat;
-  transition: background-color 0.25s ease;
+}
+
+.tv2-brand__name {
+  color: var(--tv2-text);
+  font-family: var(--tv2-font-head);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
 }
 
 .tv2-logo--footer {
-  height: 26px;
-  width: 96px;
-  margin-bottom: 14px;
+  height: 30px;
+  width: 34px;
+  margin: 0;
+}
+
+.tv2-brand__name--footer {
+  display: inline-block;
+  margin: 0 0 14px 8px;
+  vertical-align: middle;
 }
 
 .tv2-nav {

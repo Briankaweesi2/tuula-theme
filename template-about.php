@@ -5,7 +5,7 @@
  * v2 design system: our-story hero, mission/photo split, six company
  * values, the at-a-glance facts bar (same real numbers as the Home page
  * facts bar — six products, four steps, three contact channels, one
- * Kitintale office; no invented client counts or disbursement totals),
+ * Luzira office; no invented client counts or disbursement totals),
  * a team/support photo section and the final CTA band.
  */
 get_header();
@@ -35,7 +35,7 @@ $values = array(
 	),
 	array(
 		'title' => __( 'Local presence', 'tuula' ),
-		'desc'  => __( 'A real office in Kitintale, Kampala — people you can call, message or walk in and talk to.', 'tuula' ),
+		'desc'  => __( 'A real office in Luzira, Kampala — people you can call, message or walk in and talk to.', 'tuula' ),
 	),
 	array(
 		'title' => __( 'Speed', 'tuula' ),
@@ -105,7 +105,7 @@ $values = array(
 			</div>
 			<div>
 				<div class="tv2-statsbar__num">1</div>
-				<div class="tv2-statsbar__label"><?php esc_html_e( 'Kitintale office, Kampala', 'tuula' ); ?></div>
+				<div class="tv2-statsbar__label"><?php esc_html_e( 'Luzira office, Kampala', 'tuula' ); ?></div>
 			</div>
 		</div>
 	</section>
@@ -119,7 +119,7 @@ $values = array(
 			<div class="tv2-about__copy">
 				<p class="tv2-eyebrow"><?php esc_html_e( 'The team', 'tuula' ); ?></p>
 				<h2 class="tv2-h2" id="team-title"><?php esc_html_e( 'One team behind every request.', 'tuula' ); ?></h2>
-				<p><?php esc_html_e( 'Every enquiry — whatever the loan type — is reviewed by the same team, so nothing gets lost between departments. You can reach us on WhatsApp, by phone, by email or by visiting the Kitintale office, before and after you apply.', 'tuula' ); ?></p>
+				<p><?php esc_html_e( 'Every enquiry — whatever the loan type — is reviewed by the same team, so nothing gets lost between departments. You can reach us on WhatsApp, by phone, by email or by visiting the Luzira office, before and after you apply.', 'tuula' ); ?></p>
 				<p><?php esc_html_e( 'If a request is not approved, we explain what was missing and what you can adjust before applying again. An enquiry starts a conversation; it does not lock you into anything.', 'tuula' ); ?></p>
 				<a class="tv2-btn tv2-btn--ghost" href="<?php echo esc_url( $contact_url ); ?>"><?php esc_html_e( 'Meet us — get in touch', 'tuula' ); ?></a>
 			</div>

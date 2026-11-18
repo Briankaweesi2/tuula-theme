@@ -17,7 +17,7 @@ Verified locally (via `_local-preview/`, WordPress on `http://localhost:8882`):
   `+256393256458`, exactly as in the approved prototype), email `info@tuulacredit.com`,
   WhatsApp `256777030520`.
 - All six loan product categories present on the Services page: Business, School Fees, Logbook,
-  Asset financing, Emergency, Personal.
+  Salary loans, Emergency, Personal.
 - No leftover placeholder/lorem-ipsum text found in any page.
 - Loan calculator JS (`assets/js/app.js`) ported over from the working prototype logic.
 
@@ -47,7 +47,7 @@ Verified locally (via `_local-preview/`, WordPress on `http://localhost:8882`):
      points (one per line), button label, button link, anchor ID and a highlight toggle per
      product. These cards render on the Services page *and* the home-page services grid. Leave
      the repeater empty to keep the built-in six products (Business, School Fees, Logbook,
-     Asset financing, Emergency, Personal).
+     Salary loans, Emergency, Personal).
    - **Process page:** "Process Steps" — three repeaters (Personal borrower steps, Business and
      SME steps, Large company steps), each row a step title + description.
    - **FAQs page:** "FAQs" repeater — question + answer rows (same `faqs` field the
