@@ -243,10 +243,10 @@
     var submitWizard = function () {
       if (isSubmitting) return;
 
-      var data = new FormData(wizard);
       var applicantEmail = fieldValue("email");
       var replyTo = wizard.querySelector('input[name="_replyto"]');
       if (replyTo) replyTo.value = applicantEmail;
+      var data = new FormData(wizard);
 
       var estimates = updateCalculatorSummary();
       if (estimates) {
