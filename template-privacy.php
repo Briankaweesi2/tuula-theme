@@ -121,7 +121,8 @@ get_header();
         Email: admin@tuulacredit.com<br>
         Phone: +256 393 25 64 58<br>
         WhatsApp: +256 393 25 64 58<br>
-        Privacy contact: Tuula Credit Limited</p>
+        Privacy contact: Tuula Credit Limited<br>
+        Licence and registration: Tier IV Microfinance Institutions and Money Lenders Act, 2016; UMRA Registration Number UMRA01735ML.</p>
       </section>
     </div>
   </article>
