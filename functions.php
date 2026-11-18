@@ -297,19 +297,14 @@ function tuula_products_defaults() {
 			'url'    => $apply . '?loanType=Logbook+loan&amount=7000000&term=12&rate=18#calculator',
 			'anchor' => 'logbook-loans',
 		),
-		'asset' => array(
-			'icon'   => 'A',
+		'salary' => array(
+			'icon'   => 'S',
 			'title'  => __( 'Salary loans', 'tuula' ),
 			'copy'   => __( 'Personal credit for salaried employees who need support with planned expenses, family needs or unexpected costs, subject to eligibility and repayment assessment.', 'tuula' ),
 			'points' => array( __( 'For salaried employees', 'tuula' ), __( 'Clear repayment planning', 'tuula' ), __( 'Simple application process', 'tuula' ) ),
 			'cta'    => __( 'Apply for a salary loan', 'tuula' ),
 			'url'    => $apply . '?loanType=Salary+loan&amount=3000000&term=12&rate=18#calculator',
 			'anchor' => 'salary-loans',
-			'copy'   => __( 'Finance for equipment, machinery, production tools, agricultural assets, medical equipment and other income-generating assets.', 'tuula' ),
-			'points' => array( __( 'Equipment purchase', 'tuula' ), __( 'Agricultural assets', 'tuula' ), __( 'Medical and production tools', 'tuula' ) ),
-			'cta'    => __( 'Finance an asset', 'tuula' ),
-			'url'    => $apply . '?loanType=Asset+financing&amount=12000000&term=18&rate=17#calculator',
-			'anchor' => 'asset-finance',
 		),
 		'emergency' => array(
 			'icon'   => 'I',
