@@ -19,7 +19,7 @@ function tuula_defaults() {
 	return array(
 		'phone_display'  => '+256 393 25 64 58',
 		'phone_tel'      => '+256393256458',
-		'email'          => 'info@tuulacredit.com',
+		'email'          => 'admin@tuulacredit.com',
 		'whatsapp_url'   => 'https://wa.me/256777030520?text=Hello%2C%20how%20may%20we%20help',
 		'address_line_1' => 'Upet House, Behind Total Luzira',
 		'address_line_2' => 'Plot 4-6 Old Portbell Road',
