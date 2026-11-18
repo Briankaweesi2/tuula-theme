@@ -46,7 +46,7 @@ $img_base = get_template_directory_uri() . '/assets/images/';
 					<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
 				</span>
 				<h3><?php esc_html_e( 'Visit our branch', 'tuula' ); ?></h3>
-				<p><?php echo esc_html( tuula_opt( 'address_line_1' ) ); ?><br><?php echo esc_html( tuula_opt( 'address_line_2' ) ); ?></p>
+				<p><?php echo esc_html( tuula_opt( 'address_line_1' ) ); ?><br><?php echo esc_html( tuula_opt( 'address_line_2' ) ); ?><br><?php echo esc_html( tuula_opt( 'po_box' ) ); ?></p>
 			</div>
 		</div>
 
@@ -62,6 +62,7 @@ $img_base = get_template_directory_uri() . '/assets/images/';
 			<div class="tv2-contact-form-card">
 				<h3><?php esc_html_e( 'Send us a message', 'tuula' ); ?></h3>
 				<p><?php esc_html_e( 'We respond during business hours. Your message is sent straight to the Tuula team.', 'tuula' ); ?></p>
+				<p class="tv2-form-note"><?php echo esc_html( tuula_opt( 'registration' ) ); ?></p>
 				<form action="https://formspree.io/f/mgakynov" method="POST" data-tv2-contact-form>
 					<input type="hidden" name="_subject" value="New website enquiry — Tuula Credit">
 					<input type="hidden" name="_replyto" value="">

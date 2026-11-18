@@ -19,10 +19,12 @@ function tuula_defaults() {
 	return array(
 		'phone_display'  => '+256 393 25 64 58',
 		'phone_tel'      => '+256393256458',
-		'email'          => 'info@tuulacredit.com',
-		'whatsapp_url'   => 'https://wa.me/256777030520?text=Hello%2C%20how%20may%20we%20help',
-		'address_line_1' => 'Upet House, Behind Total Luzira',
-		'address_line_2' => 'Plot 4-6 Old Portbell Road',
+		'email'          => 'admin@tuulacredit.com',
+		'whatsapp_url'   => 'https://wa.me/256393256458?text=Hello%2C%20how%20may%20we%20help',
+		'address_line_1' => 'UPET House',
+		'address_line_2' => 'Plot No. 4-6 Portbell Road, Luzira',
+		'po_box'         => 'P.O. Box 150147, Kampala - Uganda',
+		'registration'   => 'Licensed and registered credit provider under the Tier IV Microfinance Institutions and Money Lenders Act, 2016. Registration Number UMRA01735ML.',
 		'facebook_url'   => 'https://www.facebook.com/tuulacredit',
 		'twitter_url'    => 'https://twitter.com/TuulaCredit1',
 		'privacy_url'    => 'https://tuulacredit.com/tuula-credit-privacy-policy/',
@@ -49,6 +51,17 @@ function tuula_opt( $name, $default = null ) {
 	if ( function_exists( 'get_field' ) ) {
 		$value = get_field( $name, 'option' );
 		if ( null !== $value && '' !== $value ) {
+			/* Transparently replace the previous published contact defaults if
+			   they were saved in ACF options; preserve any other custom values. */
+			$legacy_values = array(
+				'email'          => array( 'info@tuulacredit.com' => 'admin@tuulacredit.com' ),
+				'whatsapp_url'   => array( 'https://wa.me/256777030520?text=Hello%2C%20how%20may%20we%20help' => 'https://wa.me/256393256458?text=Hello%2C%20how%20may%20we%20help' ),
+				'address_line_1' => array( 'Upet House, Behind Total Luzira' => 'UPET House' ),
+				'address_line_2' => array( 'Plot 4-6 Old Portbell Road' => 'Plot No. 4-6 Portbell Road, Luzira' ),
+			);
+			if ( isset( $legacy_values[ $name ][ $value ] ) ) {
+				return $legacy_values[ $name ][ $value ];
+			}
 			return $value;
 		}
 	}
@@ -188,6 +201,7 @@ function tuula_contact_card( $show_address = true ) {
 		<?php if ( $show_address ) : ?>
 			<span><?php echo esc_html( tuula_opt( 'address_line_1' ) ); ?></span>
 			<span><?php echo esc_html( tuula_opt( 'address_line_2' ) ); ?></span>
+			<span><?php echo esc_html( tuula_opt( 'po_box' ) ); ?></span>
 		<?php endif; ?>
 		<a class="button button--primary" href="<?php echo esc_url( tuula_page_url( 'apply' ) . '#calculator' ); ?>"><?php esc_html_e( 'Calculate and apply', 'tuula' ); ?></a>
 	</div>

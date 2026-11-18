@@ -3,7 +3,7 @@
    the localized TUULA object (see functions.php), with safe fallbacks. */
 const TUULA_CONFIG = window.TUULA || {};
 const APPLY_URL = TUULA_CONFIG.applyUrl || "/apply/";
-const TUULA_EMAIL = TUULA_CONFIG.email || "info@tuulacredit.com";
+const TUULA_EMAIL = TUULA_CONFIG.email || "admin@tuulacredit.com";
 
 const navToggle = document.querySelector("[data-nav-toggle]");
 const nav = document.querySelector("[data-nav]");

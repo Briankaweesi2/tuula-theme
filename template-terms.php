@@ -11,7 +11,7 @@ get_header();
   <article class="tv2-legal">
     <p class="tv2-eyebrow">Legal</p>
     <h1 class="tv2-legal__title">Terms of Use</h1>
-    <p><strong>Effective date:</strong> [Date]<br><strong>Last updated:</strong> [Date]</p>
+    <p><strong>Effective date:</strong> 18 November 2026<br><strong>Last updated:</strong> 18 November 2026</p>
 
     <div class="tv2-legal__body">
       <section>
@@ -111,9 +111,12 @@ get_header();
       <section>
         <h2>18. Contact Us</h2>
         <p><strong>Tuula Credit (Tuula Credit Limited)</strong><br>
-        Address: Upet House, Behind Total Luzira, Plot 4-6 Old Portbell Road, Uganda<br>
-        Email: [Contact email]<br>
-        Phone: [Phone number]</p>
+        Address: UPET House, Plot No. 4-6 Portbell Road, Luzira, Kampala, Uganda<br>
+        Postal address: P.O. Box 150147, Kampala - Uganda<br>
+        Email: admin@tuulacredit.com<br>
+        Phone: +256 393 25 64 58<br>
+        WhatsApp: +256 393 25 64 58<br>
+        Licensed and registered credit provider under the Tier IV Microfinance Institutions and Money Lenders Act, 2016; Registration Number UMRA01735ML.</p>
       </section>
     </div>
   </article>
