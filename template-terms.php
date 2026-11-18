@@ -115,7 +115,8 @@ get_header();
         Postal address: P.O. Box 150147, Kampala - Uganda<br>
         Email: admin@tuulacredit.com<br>
         Phone: +256 393 25 64 58<br>
-        WhatsApp: +256 393 25 64 58</p>
+        WhatsApp: +256 393 25 64 58<br>
+        Licensed and registered credit provider under the Tier IV Microfinance Institutions and Money Lenders Act, 2016; Registration Number UMRA01735ML.</p>
       </section>
     </div>
   </article>
