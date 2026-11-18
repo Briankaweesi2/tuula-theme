@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TUULA_VERSION', '1.2.1' );
+define( 'TUULA_VERSION', '1.2.2' );
 
 /* ------------------------------------------------------------------ *
  *  Real business facts (from the approved static prototype).
@@ -102,79 +102,8 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_localize_script( 'tuula-app', 'TUULA', array(
 		'applyUrl'      => tuula_page_url( 'apply' ),
 		'email'         => tuula_opt( 'email' ),
-		'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
-		'contactNonce'  => wp_create_nonce( 'tuula_contact_submit' ),
 	) );
 } );
-
-/* ------------------------------------------------------------------ *
- *  Contact form: real server-side email delivery via wp_mail().
- * ------------------------------------------------------------------ */
-add_action( 'wp_ajax_tuula_contact_submit', 'tuula_handle_contact_submit' );
-add_action( 'wp_ajax_nopriv_tuula_contact_submit', 'tuula_handle_contact_submit' );
-
-function tuula_handle_contact_submit() {
-	check_ajax_referer( 'tuula_contact_submit', 'nonce' );
-
-	/* Honeypot: real visitors never fill this hidden field. */
-	if ( ! empty( $_POST['website'] ) ) {
-		wp_send_json_success();
-	}
-
-	$name    = isset( $_POST['fullName'] ) ? sanitize_text_field( wp_unslash( $_POST['fullName'] ) ) : '';
-	$email   = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
-	$phone   = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
-	$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
-
-	if ( '' === $name || '' === $phone || '' === $message ) {
-		wp_send_json_error( array( 'message' => __( 'Please fill in your name, phone number and message.', 'tuula' ) ), 400 );
-	}
-
-	if ( '' === $email || ! is_email( $email ) ) {
-		wp_send_json_error( array( 'message' => __( 'Please enter a valid email address.', 'tuula' ) ), 400 );
-	}
-
-	$to      = tuula_opt( 'email' );
-	$subject = sprintf( '[Tuula Credit website] Message from %s', $name );
-	$body    = "New message from the Tuula Credit contact form:\n\n"
-		. "Name: {$name}\n"
-		. "Phone: {$phone}\n"
-		. "Email: {$email}\n"
-		. "\nMessage:\n{$message}\n";
-
-	$headers = array(
-		'Content-Type: text/plain; charset=UTF-8',
-		"Reply-To: {$name} <{$email}>",
-	);
-
-	$sent = wp_mail( $to, $subject, $body, $headers );
-
-	if ( ! $sent ) {
-		wp_send_json_error( array( 'message' => __( 'Sorry, your message could not be sent right now. Please call or WhatsApp us instead.', 'tuula' ) ), 500 );
-	}
-
-	tuula_send_contact_autoreply( $name, $email, $message );
-
-	wp_send_json_success( array( 'message' => __( 'Thanks — your message has been sent. We will get back to you during business hours. Check your inbox (or spam folder) for our confirmation email.', 'tuula' ) ) );
-}
-
-/** Confirmation email sent to the visitor after a successful contact-form submission. */
-function tuula_send_contact_autoreply( $name, $email, $message ) {
-	$first_name = trim( strtok( $name, ' ' ) );
-	$subject    = __( 'We received your message — Tuula Credit', 'tuula' );
-	$body       = sprintf(
-		"Hi %s,\n\nThanks for reaching out to Tuula Credit. We've received your message and a member of the team will get back to you during business hours.\n\nYour message:\n\"%s\"\n\nNeed a faster answer? Call or WhatsApp us on %s, or visit the office at %s, %s.\n\n— The Tuula Credit team\n%s",
-		$first_name ? $first_name : $name,
-		$message,
-		tuula_opt( 'phone_display' ),
-		tuula_opt( 'address_line_1' ),
-		tuula_opt( 'address_line_2' ),
-		home_url( '/' )
-	);
-	$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
-
-	wp_mail( $email, $subject, $body, $headers );
-}
 
 /* Pages rebuilt on the v2 design system get the fully themed (dark/light)
    body background; legacy templates keep their light styling until their
