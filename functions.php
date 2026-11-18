@@ -24,7 +24,7 @@ function tuula_defaults() {
 		'address_line_1' => 'UPET House',
 		'address_line_2' => 'Plot No. 4-6 Portbell Road, Luzira',
 		'po_box'         => 'P.O. Box 150147, Kampala - Uganda',
-		'registration'   => 'Licensed and registered credit provider under the Tier IV Microfinance Institutions and Money Lenders Act, 2016. Registration Number UMRA01735ML.'
+		'registration'   => 'Licensed and registered credit provider under the Tier IV Microfinance Institutions and Money Lenders Act, 2016. Registration Number UMRA01735ML.',
 		'facebook_url'   => 'https://www.facebook.com/tuulacredit',
 		'twitter_url'    => 'https://twitter.com/TuulaCredit1',
 		'privacy_url'    => 'https://tuulacredit.com/tuula-credit-privacy-policy/',
