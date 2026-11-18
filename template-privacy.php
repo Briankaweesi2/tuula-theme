@@ -2,8 +2,7 @@
 /**
  * Template Name: Privacy Policy
  *
- * Full Privacy Policy supplied for Tuula Credit. Replace all bracketed
- * placeholders and obtain qualified Ugandan legal review before publishing.
+ * Privacy Policy for Tuula Credit. Obtain qualified Ugandan legal review before publishing.
  */
 get_header();
 ?>
@@ -88,7 +87,7 @@ get_header();
           <li>object to or request restriction of certain processing;</li>
           <li>withdraw consent at any time, without affecting earlier lawful processing;</li>
           <li>request a copy of your data in a portable format;</li>
-          <li>lodge a complaint with your local data protection authority [name of authority].</li>
+          <li>lodge a complaint with Uganda’s Personal Data Protection Office (PDPO), the national data protection regulator. Information on your rights and how to submit a complaint is available at <a href="https://pdpo.go.ug/" target="_blank" rel="noopener noreferrer">pdpo.go.ug</a>.</li>
         </ul>
         <p>To exercise these rights, contact us using the details below. We may need to verify your identity before acting on a request.</p>
       </section>
