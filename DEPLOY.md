@@ -13,9 +13,9 @@ imagery from the static prototype at the repo root (`index.html`, `apply.html`, 
 Verified locally (via `_local-preview/`, WordPress on `http://localhost:8882`):
 - All 6 pages (Home, Apply, Services, Process, FAQs, Contact) return HTTP 200 with zero PHP
   fatal/parse errors.
-- Real contact facts carried over correctly: phone `+256 393 25 64 58` (tel link
-  `+256393256458`, exactly as in the approved prototype), email `info@tuulacredit.com`,
-  WhatsApp `256777030520`.
+- Real contact facts carried over correctly: phone `+256 393 25 64 58` (tel link `+256393256458`), email `admin@tuulacredit.com`,
+  WhatsApp `256393256458`, office `UPET House, Plot No. 4-6 Portbell Road, Luzira`,
+  postal address `P.O. Box 150147, Kampala - Uganda`, and UMRA registration `UMRA01735ML`.
 - All six loan product categories present on the Services page: Business, School Fees, Logbook,
   Salary loans, Emergency, Personal.
 - No leftover placeholder/lorem-ipsum text found in any page.
@@ -95,9 +95,10 @@ Verified locally (via `_local-preview/`, WordPress on `http://localhost:8882`):
 
 ## Before going live — confirm with the client (do not skip)
 
-- **Reconfirm phone, email, WhatsApp number, and office address are still current** — these were
-  carried over verbatim from the existing approved prototype, but should be reconfirmed as of
-  today per the `LAUNCH.md` compliance checklist.
+- **Company contact details supplied for this update:** phone and WhatsApp `+256 393 25 64 58`,
+  email `admin@tuulacredit.com`, office `UPET House, Plot No. 4-6 Portbell Road, Luzira`,
+  postal address `P.O. Box 150147, Kampala - Uganda`. Confirm these are saved in the live
+  WordPress **Tuula Settings** options; existing saved ACF option values override theme defaults.
 - **Any interest rate, loan limit, or tenure figure shown anywhere on the site is an indicative
   example, not a final approved rate.** Finance must review and approve real figures before
   publishing (`LAUNCH.md` §5, marked `[blocker]`). Search the theme templates for rate/example
@@ -111,7 +112,7 @@ Verified locally (via `_local-preview/`, WordPress on `http://localhost:8882`):
 - Add LocalBusiness/FinancialService JSON-LD schema with the *confirmed* address/phone (a
   placeholder/example version may already be present — verify against real data) — hold this
   until after legal review, per `docs/wordpress-handoff.md`.
-- Configure SMTP (e.g. WP Mail SMTP) so any contact-form emails to `info@tuulacredit.com` are
+- Configure SMTP (e.g. WP Mail SMTP) so any contact-form emails to `admin@tuulacredit.com` are
   actually delivered, not silently dropped by default PHP `mail()`.
 - WP hardening before launch: strong admin password + 2FA, limit login attempts, keep
   core/plugins updated, a WAF/Cloudflare in front, `DISALLOW_FILE_EDIT` set in `wp-config.php`.
