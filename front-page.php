@@ -14,7 +14,7 @@ $services_url = tuula_page_url( 'services' );
 $process_url  = tuula_page_url( 'process' );
 $faqs_url     = tuula_page_url( 'faqs' );
 
-$hero_eyebrow = tuula_field( 'hero_eyebrow', __( 'Tuula Financial Services Limited', 'tuula' ) );
+$hero_eyebrow = tuula_field( 'hero_eyebrow', __( 'Tuula Credit Limited', 'tuula' ) );
 $hero_title   = tuula_field( 'hero_title', __( 'Flexible loans for real life and business in Uganda', 'tuula' ) );
 $hero_copy    = tuula_field( 'hero_copy', __( 'Get practical financing for school fees, emergencies, logbooks, assets, working capital and larger company needs with guidance before you apply.', 'tuula' ) );
 
@@ -114,7 +114,7 @@ $check_svg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke
 				</span>
 				<span>
 					<strong><?php esc_html_e( 'Reachable support', 'tuula' ); ?></strong>
-					<small><?php esc_html_e( 'WhatsApp, phone, email or a visit to the Kitintale office — before and after you apply.', 'tuula' ); ?></small>
+					<small><?php esc_html_e( 'WhatsApp, phone, email or a visit to our Luzira office — before and after you apply.', 'tuula' ); ?></small>
 				</span>
 			</div>
 			<div class="tv2-trust__item">
@@ -357,7 +357,7 @@ $check_svg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke
 			</div>
 			<div>
 				<div class="tv2-statsbar__num">1</div>
-				<div class="tv2-statsbar__label"><?php esc_html_e( 'Kitintale office, Kampala', 'tuula' ); ?></div>
+				<div class="tv2-statsbar__label"><?php esc_html_e( 'Luzira office, Kampala', 'tuula' ); ?></div>
 			</div>
 		</div>
 	</section>

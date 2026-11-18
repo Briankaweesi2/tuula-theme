@@ -1,6 +1,6 @@
 # Tuula Credit — WordPress Theme
 
-Custom-coded WordPress theme for [Tuula Financial Services Limited](https://tuulacredit.com), a Ugandan lender. Built from scratch (no page builder), with ACF-editable content and a dark/light design system.
+Custom-coded WordPress theme for [Tuula Credit Limited](https://tuulacredit.com), a Ugandan lender. Built from scratch (no page builder), with ACF-editable content and a dark/light design system.
 
 ## Pages
 Home, Apply (4-step wizard), Services, Process, FAQs, Contact, About, Privacy Policy, Terms & Conditions.

@@ -15,10 +15,10 @@
    ──────────────────────────────────────────────────────────────── */
 :root {
   /* Brand accent (Tuula real palette, replaces spec's #305CDE) */
-  --tv2-accent: #1557bf;
-  --tv2-accent-strong: #0b3f8a;
-  --tv2-accent-deep: #174ea6;
-  --tv2-gold: #d39b16;
+  --tv2-accent: #DD9A14;
+  --tv2-accent-strong: #B77C08;
+  --tv2-accent-deep: #8F6208;
+  --tv2-gold: #DD9A14;
 
   /* Typography */
   --tv2-font-head: "Space Grotesk", "Overpass", Arial, sans-serif;
@@ -63,15 +63,15 @@ html:not([data-theme]) {
   --tv2-text-dim: #5b6472;
   --tv2-text-faint: #7c8797;
   --tv2-nav-bg: rgba(255, 255, 255, 0.85);
-  --tv2-logo-color: var(--tv2-accent);
-  --tv2-accent-tint: rgba(21, 87, 191, 0.1);
-  --tv2-accent-tint-strong: rgba(21, 87, 191, 0.15);
-  --tv2-accent-border: rgba(21, 87, 191, 0.28);
-  --tv2-accent-soft-text: #3f74d4;
+  --tv2-logo-color: #565F66;
+  --tv2-accent-tint: rgba(221, 154, 20, 0.11);
+  --tv2-accent-tint-strong: rgba(221, 154, 20, 0.17);
+  --tv2-accent-border: rgba(221, 154, 20, 0.34);
+  --tv2-accent-soft-text: #9B6908;
   --tv2-hero-glow:
-    radial-gradient(circle at 15% 20%, rgba(21, 87, 191, 0.1), transparent 45%),
-    radial-gradient(circle at 85% 60%, rgba(21, 87, 191, 0.08), transparent 50%);
-  --tv2-cta-glow: radial-gradient(circle at 50% 0%, rgba(21, 87, 191, 0.08), transparent 60%);
+    radial-gradient(circle at 15% 20%, rgba(221, 154, 20, 0.10), transparent 45%),
+    radial-gradient(circle at 85% 60%, rgba(86, 95, 102, 0.08), transparent 50%);
+  --tv2-cta-glow: radial-gradient(circle at 50% 0%, rgba(221, 154, 20, 0.09), transparent 60%);
 }
 
 /* Dark theme */
@@ -86,14 +86,14 @@ html[data-theme="dark"] {
   --tv2-text-dim: #9ba6b8;
   --tv2-text-faint: #7c8797;
   --tv2-nav-bg: rgba(7, 11, 20, 0.78);
-  --tv2-logo-color: #ffffff;
-  --tv2-accent-tint: rgba(21, 87, 191, 0.16);
-  --tv2-accent-tint-strong: rgba(21, 87, 191, 0.24);
-  --tv2-accent-border: rgba(72, 128, 220, 0.38);
-  --tv2-accent-soft-text: #6d9ae8;
+  --tv2-logo-color: #DD9A14;
+  --tv2-accent-tint: rgba(221, 154, 20, 0.16);
+  --tv2-accent-tint-strong: rgba(221, 154, 20, 0.24);
+  --tv2-accent-border: rgba(221, 154, 20, 0.42);
+  --tv2-accent-soft-text: #F0C36A;
   --tv2-hero-glow:
-    radial-gradient(circle at 15% 20%, rgba(21, 87, 191, 0.16), transparent 45%),
-    radial-gradient(circle at 85% 60%, rgba(21, 87, 191, 0.12), transparent 50%);
+    radial-gradient(circle at 15% 20%, rgba(221, 154, 20, 0.16), transparent 45%),
+    radial-gradient(circle at 85% 60%, rgba(86, 95, 102, 0.12), transparent 50%);
   --tv2-cta-glow: radial-gradient(circle at 50% 0%, rgba(21, 87, 191, 0.16), transparent 60%);
   --tv2-shadow-photo: 0 30px 70px rgba(0, 0, 0, 0.45);
   --tv2-shadow-float: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -261,21 +261,34 @@ body.admin-bar .tv2-header {
   flex: 0 0 auto;
 }
 
-/* Real Tuula logo recolored via CSS mask: white in dark, brand blue in light */
+/* Official two-tone Tuula Credit symbol supplied for this rebrand. */
 .tv2-logo {
   display: block;
-  height: 32px;
-  width: 118px;
-  background-color: var(--tv2-logo-color);
-  -webkit-mask: url(../images/tuula-logo.png) center / contain no-repeat;
-  mask: url(../images/tuula-logo.png) center / contain no-repeat;
-  transition: background-color 0.25s ease;
+  flex: 0 0 auto;
+  height: 38px;
+  width: 42px;
+  background: url(../images/tuula-credit-mark.svg) center / contain no-repeat;
+}
+
+.tv2-brand__name {
+  color: var(--tv2-text);
+  font-family: var(--tv2-font-head);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
 }
 
 .tv2-logo--footer {
-  height: 26px;
-  width: 96px;
-  margin-bottom: 14px;
+  height: 30px;
+  width: 34px;
+  margin: 0;
+}
+
+.tv2-brand__name--footer {
+  display: inline-block;
+  margin: 0 0 14px 8px;
+  vertical-align: middle;
 }
 
 .tv2-nav {

@@ -13,7 +13,7 @@ get_header();
 
 $hero_eyebrow = tuula_field( 'page_hero_eyebrow', __( 'Get in touch', 'tuula' ) );
 $hero_title   = tuula_field( 'page_hero_title', __( "We're easy to reach.", 'tuula' ) );
-$hero_intro   = tuula_field( 'page_hero_intro', __( 'Call, WhatsApp, visit the Kitintale office or send a message — the team responds during business hours.', 'tuula' ) );
+$hero_intro   = tuula_field( 'page_hero_intro', __( 'Call, WhatsApp, visit the Luzira office or send a message — the team responds during business hours.', 'tuula' ) );
 
 $img_base = get_template_directory_uri() . '/assets/images/';
 ?>
