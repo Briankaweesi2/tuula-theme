@@ -64,7 +64,8 @@ $values = array(
 			</div>
 			<div class="tv2-about__copy">
 				<h2 class="tv2-h2" id="mission-title"><?php esc_html_e( 'Financing that starts with a conversation.', 'tuula' ); ?></h2>
-				<p><?php esc_html_e( 'Tuula Credit was established to help individuals, businesses and institutions in Uganda access the credit they need to build, preserve and grow what matters to them. We serve clients across Uganda.', 'tuula' ); ?></p>
+				<p><?php esc_html_e( 'Tuula Credit Limited helps individuals, businesses and institutions in Uganda access practical credit solutions. Our office is at UPET House, Plot No. 4-6 Portbell Road, Luzira, Kampala.', 'tuula' ); ?></p>
+				<p><strong><?php echo esc_html( tuula_opt( 'registration' ) ); ?></strong></p>
 				<p><?php esc_html_e( 'We take time to understand each client\'s situation and match them with the right product for their need — school fees, an emergency, a logbook loan, an asset, working capital or larger company financing. We believe access to credit should be clear, responsible and never intimidating.', 'tuula' ); ?></p>
 				<a class="tv2-btn tv2-btn--primary" href="<?php echo esc_url( $apply_url . '#calculator' ); ?>"><?php esc_html_e( 'Apply for a loan →', 'tuula' ); ?></a>
 			</div>
