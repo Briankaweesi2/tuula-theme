@@ -55,7 +55,7 @@ $step_labels = array(
 		<form class="tv2-wizard" id="calculator" action="https://formspree.io/f/mgakynov" method="POST" data-tv2-wizard data-calculator-form data-tv2-calc data-tv2-apply-form>
 			<input type="hidden" name="_subject" value="New loan application — Tuula Credit">
 			<input type="hidden" name="_replyto" value="">
-			<div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+			<input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 			<input type="hidden" name="loanType" data-wizard-product-input>
 
 			<!-- Step 1: loan product -->
