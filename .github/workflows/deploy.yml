@@ -1,0 +1,54 @@
+name: Deploy Tuula Credit to WordPress
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tuula-credit-wordpress-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Trigger WordPress theme deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Check deployment secret
+        env:
+          DEPLOY_URL: ${{ secrets.DFG_THEME_DEPLOY_URL }}
+        run: |
+          if [ -z "$DEPLOY_URL" ]; then
+            echo "::error::GitHub Actions secret DFG_THEME_DEPLOY_URL is not configured."
+            exit 1
+          fi
+
+      - name: Trigger Deployer for Git
+        env:
+          DEPLOY_URL: ${{ secrets.DFG_THEME_DEPLOY_URL }}
+        run: |
+          set -euo pipefail
+
+          HTTP_CODE=$(curl --location --silent --show-error \
+            --output /tmp/dfg-response.txt \
+            --write-out "%{http_code}" \
+            --max-time 60 \
+            "$DEPLOY_URL")
+
+          echo "Deployer endpoint HTTP status: $HTTP_CODE"
+
+          case "$HTTP_CODE" in
+            2??)
+              echo "Deployer endpoint accepted the request."
+              ;;
+            *)
+              echo "::error::Deployer endpoint returned HTTP $HTTP_CODE."
+              exit 1
+              ;;
+          esac
