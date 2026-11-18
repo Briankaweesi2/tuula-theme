@@ -12,7 +12,7 @@ get_header();
 
 $hero_eyebrow = tuula_field( 'page_hero_eyebrow', __( 'Our story', 'tuula' ) );
 $hero_title   = tuula_field( 'page_hero_title', __( 'Built to help Ugandans grow', 'tuula' ) );
-$hero_intro   = tuula_field( 'page_hero_intro', __( 'Tuula Financial Services Limited helps individuals, businesses and institutions across Uganda access practical, clearly explained financing.', 'tuula' ) );
+$hero_intro   = tuula_field( 'page_hero_intro', __( 'Tuula Credit helps individuals, businesses and institutions across Uganda access practical, clearly explained loan solutions.', 'tuula' ) );
 
 $apply_url   = tuula_page_url( 'apply' );
 $contact_url = tuula_page_url( 'contact' );
@@ -64,8 +64,8 @@ $values = array(
 			</div>
 			<div class="tv2-about__copy">
 				<h2 class="tv2-h2" id="mission-title"><?php esc_html_e( 'Financing that starts with a conversation.', 'tuula' ); ?></h2>
-				<p><?php esc_html_e( 'Tuula Financial Services Limited was established to help individuals, businesses and institutions in Uganda access the financial resources they need to build, preserve and grow what matters to them. We operate from Kitintale, Kampala and serve clients across Uganda.', 'tuula' ); ?></p>
-				<p><?php esc_html_e( 'We take time to understand each client\'s situation and match them with the right product for their need — school fees, an emergency, a logbook loan, an asset, working capital or larger company financing. We believe financial services should be accessible and clearly explained, never intimidating.', 'tuula' ); ?></p>
+				<p><?php esc_html_e( 'Tuula Credit was established to help individuals, businesses and institutions in Uganda access the credit they need to build, preserve and grow what matters to them. We serve clients across Uganda.', 'tuula' ); ?></p>
+				<p><?php esc_html_e( 'We take time to understand each client\'s situation and match them with the right product for their need — school fees, an emergency, a logbook loan, an asset, working capital or larger company financing. We believe access to credit should be clear, responsible and never intimidating.', 'tuula' ); ?></p>
 				<a class="tv2-btn tv2-btn--primary" href="<?php echo esc_url( $apply_url . '#calculator' ); ?>"><?php esc_html_e( 'Apply for a loan →', 'tuula' ); ?></a>
 			</div>
 		</div>

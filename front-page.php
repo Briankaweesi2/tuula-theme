@@ -14,7 +14,7 @@ $services_url = tuula_page_url( 'services' );
 $process_url  = tuula_page_url( 'process' );
 $faqs_url     = tuula_page_url( 'faqs' );
 
-$hero_eyebrow = tuula_field( 'hero_eyebrow', __( 'Tuula Financial Services Limited', 'tuula' ) );
+$hero_eyebrow = tuula_field( 'hero_eyebrow', __( 'Tuula Credit Limited', 'tuula' ) );
 $hero_title   = tuula_field( 'hero_title', __( 'Flexible loans for real life and business in Uganda', 'tuula' ) );
 $hero_copy    = tuula_field( 'hero_copy', __( 'Get practical financing for school fees, emergencies, logbooks, assets, working capital and larger company needs with guidance before you apply.', 'tuula' ) );
 
