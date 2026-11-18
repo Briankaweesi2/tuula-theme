@@ -35,11 +35,15 @@ $tuula_services_url = tuula_page_url( 'services' );
 				<a href="<?php echo esc_url( tuula_opt( 'whatsapp_url' ) ); ?>"><?php esc_html_e( 'WhatsApp us', 'tuula' ); ?></a>
 				<span class="tv2-footer__muted"><?php echo esc_html( tuula_opt( 'address_line_1' ) ); ?></span>
 				<span class="tv2-footer__muted"><?php echo esc_html( tuula_opt( 'address_line_2' ) ); ?></span>
+				<span class="tv2-footer__muted"><?php echo esc_html( tuula_opt( 'po_box' ) ); ?></span>
 			</div>
 		</div>
 	</div>
 	<div class="tv2-footer__bottom">
-		<span>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Tuula Credit.</span>
+		<div class="tv2-footer__legal-notice">
+			<?php echo esc_html( tuula_opt( 'registration' ) ); ?>
+		</div>
+		<span>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Tuula Credit Limited.</span>
 		<div class="tv2-footer__legal">
 			<a href="<?php echo esc_url( tuula_opt( 'facebook_url' ) ); ?>">Facebook</a>
 			<a href="<?php echo esc_url( tuula_opt( 'twitter_url' ) ); ?>">Twitter</a>
