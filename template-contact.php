@@ -4,10 +4,7 @@
  *
  * v2 design system: three contact-method cards (call, WhatsApp, visit),
  * then an office photo + the shared tuula_contact_card() beside a message
- * form. The form submits directly to the server (tuula_handle_contact_submit()
- * in functions.php), which emails the real Tuula address via wp_mail();
- * it falls back to a mailto draft only if the request itself fails to reach
- * the server.
+ * form. Contact enquiries are submitted securely to Formspree.
  */
 get_header();
 
@@ -65,7 +62,10 @@ $img_base = get_template_directory_uri() . '/assets/images/';
 			<div class="tv2-contact-form-card">
 				<h3><?php esc_html_e( 'Send us a message', 'tuula' ); ?></h3>
 				<p><?php esc_html_e( 'We respond during business hours. Your message is sent straight to the Tuula team.', 'tuula' ); ?></p>
-				<form data-tv2-contact-form>
+				<form action="https://formspree.io/f/mgakynov" method="POST" data-tv2-contact-form>
+					<input type="hidden" name="_subject" value="New website enquiry — Tuula Credit">
+					<input type="hidden" name="_replyto" value="">
+					<div class="tv2-form-honeypot" aria-hidden="true"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
 					<div class="tv2-field-grid">
 						<label class="tv2-field">
 							<span><?php esc_html_e( 'Full name', 'tuula' ); ?></span>
