@@ -123,8 +123,7 @@
    * The repayment math itself still runs in app.js via the shared
    * [data-calculator-form] hook on the same <form>; this block only
    * manages step state, validation gating and the final submission
-   * (an email draft to the Tuula team — the same lead-capture
-   * mechanism the previous Apply form used; there is no WordPress
+   * (a Formspree submission to the Tuula team; there is no WordPress
    * loan-application backend).                                      */
   var wizard = document.querySelector("[data-tv2-wizard]");
 
