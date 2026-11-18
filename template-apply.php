@@ -9,10 +9,8 @@
  * app.js drives the math via [data-calculator-form] (same code path as the
  * Home page calculator), theme-v2.js formats the slider displays via
  * [data-tv2-calc], and the wizard step logic lives in theme-v2.js under
- * [data-tv2-wizard]. Submission opens a pre-filled email draft to the real
- * Tuula team address (tuula_opt('email')) — the same lead-capture mechanism
- * the previous Apply form used; there is no loan-application backend on the
- * WordPress side (the real submission flow lives in the mobile app).
+ * [data-tv2-wizard]. Applications are submitted directly to Tuula Credit's
+ * configured Formspree endpoint. Submission does not constitute loan approval.
  */
 get_header();
 
@@ -54,7 +52,10 @@ $step_labels = array(
 
 		<!-- Wizard. data-calculator-form: app.js computes the shared amortized
 		     estimate; data-tv2-calc: theme-v2.js formats slider displays. -->
-		<form class="tv2-wizard" id="calculator" data-tv2-wizard data-calculator-form data-tv2-calc>
+		<form class="tv2-wizard" id="calculator" action="https://formspree.io/f/mgakynov" method="POST" data-tv2-wizard data-calculator-form data-tv2-calc data-tv2-apply-form>
+			<input type="hidden" name="_subject" value="New loan application — Tuula Credit">
+			<input type="hidden" name="_replyto" value="">
+			<div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
 			<input type="hidden" name="loanType" data-wizard-product-input>
 
 			<!-- Step 1: loan product -->
@@ -219,7 +220,7 @@ $step_labels = array(
 				<span class="tv2-wizard__spacer" aria-hidden="true"></span>
 				<button type="button" class="tv2-btn tv2-btn--primary" data-wizard-next disabled><?php esc_html_e( 'Continue →', 'tuula' ); ?></button>
 			</div>
-			<p class="tv2-form-note tv2-wizard__status" data-wizard-status hidden><?php esc_html_e( 'Submitting opens an email draft to the Tuula team with your request details.', 'tuula' ); ?></p>
+			<p class="tv2-form-note tv2-wizard__status" data-wizard-status hidden><?php esc_html_e( 'Your application will be sent to the Tuula Credit team. Please keep this page open while it submits.', 'tuula' ); ?></p>
 		</form>
 
 		<!-- Success state (replaces the form after submit) -->
@@ -227,8 +228,8 @@ $step_labels = array(
 			<span class="tv2-success__icon" aria-hidden="true">
 				<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
 			</span>
-			<h2><?php esc_html_e( 'Request ready to send', 'tuula' ); ?></h2>
-			<p data-wizard-success-copy><?php esc_html_e( 'We have opened an email draft with your details — press send in your email app and the Tuula Credit team will call you to continue your application.', 'tuula' ); ?></p>
+			<h2><?php esc_html_e( 'Application submitted', 'tuula' ); ?></h2>
+			<p data-wizard-success-copy><?php esc_html_e( 'Thank you. Your loan application has been sent to the Tuula Credit team. We will contact you using the details you provided.', 'tuula' ); ?></p>
 			<p class="tv2-form-note">
 				<?php esc_html_e( 'Prefer to talk first?', 'tuula' ); ?>
 				<a class="tv2-link" href="tel:<?php echo esc_attr( tuula_opt( 'phone_tel' ) ); ?>"><?php echo esc_html( tuula_opt( 'phone_display' ) ); ?></a>
