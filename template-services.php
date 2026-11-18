@@ -93,8 +93,8 @@ $hero_intro   = tuula_field( 'page_hero_intro', __( 'Compare the loan products, 
 				<p><?php esc_html_e( 'For unexpected medical bills, rent pressure, urgent household needs, transport costs, business interruptions or a temporary gap in income.', 'tuula' ); ?></p>
 			</article>
 			<article>
-				<h3><?php esc_html_e( 'Loans for equipment and assets', 'tuula' ); ?></h3>
-				<p><?php esc_html_e( 'For companies, farms, clinics and operators who need machinery, specialized tools, agricultural equipment, medical devices or production assets.', 'tuula' ); ?></p>
+				<h3><?php esc_html_e( 'Salary loans', 'tuula' ); ?></h3>
+				<p><?php esc_html_e( 'For eligible salaried employees who need support with planned expenses, family needs or unexpected costs, subject to an affordability and repayment assessment.', 'tuula' ); ?></p>
 			</article>
 			<article>
 				<h3><?php esc_html_e( 'Loans with repayment guidance', 'tuula' ); ?></h3>
