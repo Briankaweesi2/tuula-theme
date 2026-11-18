@@ -3,6 +3,7 @@
  * Template Name: Privacy Policy
  *
  * Privacy Policy for Tuula Credit. Obtain qualified Ugandan legal review before publishing.
+ * Deployment refresh: 18 November 2026.
  */
 get_header();
 ?>
