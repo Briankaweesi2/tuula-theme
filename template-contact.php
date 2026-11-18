@@ -65,7 +65,7 @@ $img_base = get_template_directory_uri() . '/assets/images/';
 				<form action="https://formspree.io/f/mgakynov" method="POST" data-tv2-contact-form>
 					<input type="hidden" name="_subject" value="New website enquiry — Tuula Credit">
 					<input type="hidden" name="_replyto" value="">
-					<div class="tv2-form-honeypot" aria-hidden="true"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+					<div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
 					<div class="tv2-field-grid">
 						<label class="tv2-field">
 							<span><?php esc_html_e( 'Full name', 'tuula' ); ?></span>
