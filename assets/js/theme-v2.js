@@ -340,10 +340,8 @@
   }
 
   /* ── Contact message form (Contact page) ─────────────────────── *
-   * Submits directly to the server, which emails the real Tuula
-   * address via wp_mail() (see tuula_handle_contact_submit() in
-   * functions.php). Falls back to a mailto draft only if the request
-   * itself fails to reach the server (offline, blocked, etc.).       */
+   * Sends enquiries directly to the configured Formspree endpoint.
+   * The endpoint is also present in the form action as a no-JS fallback. */
   var contactForm = document.querySelector("[data-tv2-contact-form]");
 
   if (contactForm) {
@@ -351,66 +349,35 @@
       event.preventDefault();
       if (!contactForm.reportValidity()) return;
 
-      var contactEmail = (window.TUULA && window.TUULA.email) || "info@tuulacredit.com";
       var status = contactForm.querySelector("[data-contact-status]");
       var submitBtn = contactForm.querySelector('button[type="submit"]');
       var data = new FormData(contactForm);
-      var name = String(data.get("fullName") || "").trim();
-
-      function mailtoFallback() {
-        var body = [
-          "New website message for Tuula Credit",
-          "",
-          "Name: " + name,
-          "Phone: " + (data.get("phone") || ""),
-          "Email: " + (data.get("email") || ""),
-          "",
-          "Message:",
-          data.get("message") || "",
-        ].join("\n");
-        var subject = "Website message" + (name ? " from " + name : "");
-        if (status) {
-          status.textContent = "Opening an email draft to " + contactEmail + " in your email app…";
-        }
-        window.location.href =
-          "mailto:" + contactEmail +
-          "?subject=" + encodeURIComponent(subject) +
-          "&body=" + encodeURIComponent(body);
-      }
-
-      if (!window.TUULA || !window.TUULA.ajaxUrl || !window.TUULA.contactNonce || !window.fetch) {
-        mailtoFallback();
-        return;
-      }
-
-      data.append("action", "tuula_contact_submit");
-      data.append("nonce", window.TUULA.contactNonce);
+      var email = String(data.get("email") || "").trim();
+      var replyTo = contactForm.querySelector('input[name="_replyto"]');
+      if (replyTo) replyTo.value = email;
 
       if (submitBtn) submitBtn.disabled = true;
       if (status) status.textContent = "Sending your message…";
 
-      fetch(window.TUULA.ajaxUrl, {
+      fetch(contactForm.action, {
         method: "POST",
-        credentials: "same-origin",
         body: data,
+        headers: { Accept: "application/json" },
       })
         .then(function (response) {
+          if (!response.ok) {
+            return response.json().catch(function () { return {}; }).then(function (json) {
+              throw new Error((json && json.errors && json.errors[0] && json.errors[0].message) || "Sorry, your message could not be sent. Please try again.");
+            });
+          }
           return response.json();
         })
-        .then(function (json) {
-          if (json && json.success) {
-            if (status) {
-              status.textContent = (json.data && json.data.message) || "Thanks — your message has been sent.";
-            }
-            contactForm.reset();
-          } else {
-            if (status) {
-              status.textContent = (json && json.data && json.data.message) || "Sorry, something went wrong. Please try again.";
-            }
-          }
+        .then(function () {
+          if (status) status.textContent = "Thank you. Your message has been sent to the Tuula Credit team.";
+          contactForm.reset();
         })
-        .catch(function () {
-          mailtoFallback();
+        .catch(function (error) {
+          if (status) status.textContent = error.message || "Sorry, something went wrong. Please try again.";
         })
         .finally(function () {
           if (submitBtn) submitBtn.disabled = false;
