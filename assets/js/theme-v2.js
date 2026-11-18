@@ -144,7 +144,7 @@
     var successBlock = document.querySelector("[data-wizard-success]");
     var stepper = document.querySelector("[data-wizard-stepper]");
 
-    var wizardEmail = (window.TUULA && window.TUULA.email) || "info@tuulacredit.com";
+    var isSubmitting = false;
 
     var fieldValue = function (name) {
       var field = wizard.elements.namedItem(name);
@@ -241,47 +241,70 @@
     };
 
     var submitWizard = function () {
-      var lines = [
-        "New Tuula Credit loan request (website Apply wizard)",
-        "",
-        "Loan product: " + productInput.value,
-        "Amount: " + summaryText("[data-amount-display]"),
-        "Term: " + summaryText("[data-term-display]"),
-        "Annual interest estimate: " + summaryText("[data-rate-display]"),
-        "Estimated monthly payment: " + summaryText("[data-monthly]"),
-        "Estimated total interest: " + summaryText("[data-interest]"),
-        "Estimated total repayment: " + summaryText("[data-total]"),
-        "",
-        "Full name: " + fieldValue("fullName"),
-        "Phone: " + fieldValue("phone"),
-        "Email: " + fieldValue("email"),
-        "National ID number: " + fieldValue("nin"),
-        "Employment / business status: " + fieldValue("employment"),
-        "",
-        "Loan purpose:",
-        fieldValue("purpose"),
-      ];
-      var subject = "Tuula Credit loan request - " + (productInput.value || "New request");
-      var mailtoUrl =
-        "mailto:" + wizardEmail +
-        "?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(lines.join("\n"));
+      if (isSubmitting) return;
 
-      if (successBlock) {
-        var copy = successBlock.querySelector("[data-wizard-success-copy]");
-        var phone = fieldValue("phone");
-        if (copy && phone) {
-          copy.textContent =
-            "We have opened an email draft with your details — press send in your email app " +
-            "and the Tuula Credit team will call " + phone + " to continue your application.";
-        }
-        wizard.hidden = true;
-        if (stepper) stepper.hidden = true;
-        successBlock.hidden = false;
-        successBlock.scrollIntoView({ behavior: "smooth", block: "center" });
+      var applicantEmail = fieldValue("email");
+      var replyTo = wizard.querySelector('input[name="_replyto"]');
+      if (replyTo) replyTo.value = applicantEmail;
+      var data = new FormData(wizard);
+
+      var estimates = updateCalculatorSummary();
+      if (estimates) {
+        data.set("monthlyPayment", estimates.monthly);
+        data.set("totalInterest", estimates.interest);
+        data.set("totalRepayment", estimates.total);
+      }
+      data.set("_subject", "Tuula Credit loan application - " + (productInput.value || "New request"));
+
+      isSubmitting = true;
+      if (nextButton) {
+        nextButton.disabled = true;
+        nextButton.textContent = "Submitting…";
+      }
+      if (statusNote) {
+        statusNote.hidden = false;
+        statusNote.textContent = "Sending your application securely. Please wait…";
       }
 
-      window.location.href = mailtoUrl;
+      fetch(wizard.action, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            return response.json().catch(function () { return {}; }).then(function (json) {
+              throw new Error((json && json.errors && json.errors[0] && json.errors[0].message) ||
+                "Your application could not be sent. Please try again or contact Tuula Credit directly.");
+            });
+          }
+          return response.json();
+        })
+        .then(function () {
+          if (successBlock) {
+            var copy = successBlock.querySelector("[data-wizard-success-copy]");
+            var phone = fieldValue("phone");
+            if (copy) {
+              copy.textContent = "Thank you. Your application has been sent to the Tuula Credit team. " +
+                (phone ? "We will contact you on " + phone + " to continue your application." : "We will contact you using the details you provided.");
+            }
+            wizard.hidden = true;
+            if (stepper) stepper.hidden = true;
+            successBlock.hidden = false;
+            successBlock.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        })
+        .catch(function (error) {
+          if (statusNote) {
+            statusNote.textContent = error.message ||
+              "Something went wrong while sending your application. Please try again.";
+          }
+          isSubmitting = false;
+          if (nextButton) {
+            nextButton.disabled = nextIsDisabled();
+            nextButton.textContent = "Submit request";
+          }
+        });
     };
 
     productCards.forEach(function (card) {
